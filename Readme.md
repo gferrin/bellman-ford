@@ -66,7 +66,7 @@ If a node with `node_name` already exists then nothing wil happen
 ### add_edge
 
 This function adds edges to directed graph.
-It takes three parameters 'add_edge(node_from, node_to, edge_weight)' 
+It takes three parameters `add_edge(node_from, node_to, edge_weight)` 
 If `node_from` or `node_to` has not yet beed added to the graph then
 the function call will fail
 
