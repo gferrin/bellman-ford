@@ -14,7 +14,12 @@
     "directed-graph",
     "C++"
   ],
+  "author": "Gabriel Ferrin <garf11235813@gmail.com>",
   "dependencies": {
     "node-gyp": "~0.9.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gferrin/bellman-ford.git"
   }
 }
