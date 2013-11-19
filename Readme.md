@@ -83,7 +83,7 @@ This function prints out the current graph
 graph.print();
 ```
 for the given example will output 
-
+```
 a:
 	weight: -0.1 to: b
 	weight: 0.9 to: c
@@ -98,7 +98,7 @@ e:
 	weight: 0.2 to: d
 c:
 	weight: -0.1 to: e
-
+```
 
 ### trim 
 
