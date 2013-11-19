@@ -5,6 +5,15 @@
   "scripts": {
     "start": "node test.js"
   },
+  "description": "Bellman Ford algorithm for node.js",
+  "main": "/build/Release/graph",
+  "keywords": [
+    "bellman-ford",
+    "bellmanford",
+    "graph",
+    "directed-graph",
+    "C++"
+  ],
   "dependencies": {
     "node-gyp": "~0.9.6"
   }

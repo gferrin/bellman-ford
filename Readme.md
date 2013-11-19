@@ -1,8 +1,8 @@
 # bellman-ford 
 
-bellman-ford allows you to run the bellman ford algorithm in node.js.
+bellman-ford allows you to run the [bellman ford algorithm](https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm) in node.js.
 
-It is written in C++ and ported to node.js and uses a directed graph
+It is written in C++ and ported to node.js. It uses a directed graph
 as it's underlying data structure. 
 
 ## Install
