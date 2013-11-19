@@ -1,12 +1,12 @@
 {
   "name": "bellman-ford",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "gypfile": true,
   "scripts": {
     "start": "node test.js"
   },
   "description": "Bellman Ford algorithm for node.js",
-  "main": "/build/Release/graph",
+  "main": "index.js",
   "keywords": [
     "bellman-ford",
     "bellmanford",

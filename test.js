@@ -1,4 +1,4 @@
-var graph_constructor = require('./build/Release/graph');
+var graph_constructor = require('./index');
 var graph = new graph_constructor.Graph();
 
 
