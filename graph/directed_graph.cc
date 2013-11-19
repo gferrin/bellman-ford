@@ -25,10 +25,10 @@ Graph::~Graph()
 	nodes.clear();
 }
 
-void Graph::add_node( string & currency )
+void Graph::add_node( string & name )
 {
-	if( !search(currency) ){
-		GNode *temp = new GNode( currency, nodes.size() );
+	if( !search(name) ){
+		GNode *temp = new GNode( name, nodes.size() );
 		nodes.push_back( *temp );	
 	}
 }

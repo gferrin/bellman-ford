@@ -52,9 +52,9 @@ Handle<Value> Graph::add_node(const v8::Arguments& args)
   Graph* graph = ObjectWrap::Unwrap<Graph>(args.This());
 
   v8::String::Utf8Value param(args[0]->ToString());
-  std::string currency = std::string(*param);  
+  std::string name = std::string(*param);  
 
-  graph->add_node( currency );
+  graph->add_node( name );
   return scope.Close(Boolean::New(true));
 }
 

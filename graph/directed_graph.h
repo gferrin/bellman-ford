@@ -24,11 +24,9 @@ public:
 
 	void print();
 	void trim();
-	void add_node( std::string & currency );
+	void add_node( std::string & name );
 	void add_edge( std::string &, std::string &, double );
 	void update_edge( std::string &, std::string &, double );
-	void add_currency_edge( std::string &, std::string &, std::string &, double, double );
-	void update_currency_edge( std::string &, std::string &, std::string &, double, double );
 	bool search( std::string & name );
 	bool bellman_ford( std::string & name, std::vector<std::vector<std::string> > & );
 
