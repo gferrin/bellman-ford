@@ -12,7 +12,9 @@
     "bellmanford",
     "graph",
     "directed-graph",
-    "C++"
+    "c++",
+    "shortest",
+    "path"
   ],
   "author": "Gabriel Ferrin <garf11235813@gmail.com>",
   "dependencies": {
