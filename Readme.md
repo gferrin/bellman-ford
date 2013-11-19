@@ -73,7 +73,7 @@ the function call will fail
 ### update_edge
 
 This function updates edge weights between nodes
-It takes three parameters 'update_edge(node_from, node_to, edge_weight)' 
+It takes three parameters `update_edge(node_from, node_to, edge_weight)`
 
 ### print
 
