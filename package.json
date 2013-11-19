@@ -1,6 +1,6 @@
 {
   "name": "bellman-ford",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "gypfile": true,
   "scripts": {
     "start": "node test.js"
