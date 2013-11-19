@@ -219,31 +219,6 @@ string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
 			// If distances[u] + w < distances[v]
 			if( distances.at( tempNode->key ) + temp->weight < distances.at( temp->node->key ) && distances.at( tempNode->key ) != infinity ){
 				message = "Graph contains negative weight cycles \n"; 
-				bool null_check = true;
-
-				path.push_back( nodes.at( tempNode->key ).currency_type );
-				tempNode = &nodes.at( parents.at( tempNode->key ));
-					
-				if( tempNode == NULL ){
-					null_check = false;
-				} 
-				path.push_back( tempNode->currency_type );
-					
-				if( &nodes.at( parents.at( tempNode->key )) == NULL ){
-					null_check = false;	
-				}
-				path.push_back( nodes.at( parents.at( tempNode->key )).currency_type );
-
-				if( path.at(0) == path.at(1) || path.at(0) == path.at(2) || path.at(1) == path.at(2)){
-					false;				
-				}
-
-				if( null_check ){
-					cout << message;
-					return message; 
-				} else {
-					path.clear();
-				}
 			}
 		}
 	}

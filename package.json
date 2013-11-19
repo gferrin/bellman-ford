@@ -1,0 +1,11 @@
+{
+  "name": "bellman-ford",
+  "version": "0.0.1",
+  "gypfile": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "node-gyp": "~0.9.6"
+  }
+}
