@@ -25,8 +25,8 @@ void Graph::Init(Handle<Object> target) {
   tpl->PrototypeTemplate()->Set(String::NewSymbol("trim"),
       FunctionTemplate::New(trim)->GetFunction());
 
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("check_arbitrage"),
-      FunctionTemplate::New(check_arbitrage)->GetFunction());
+  tpl->PrototypeTemplate()->Set(String::NewSymbol("bellmanford"),
+      FunctionTemplate::New(bellmanford)->GetFunction());
 
   Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
   target->Set(String::NewSymbol("Graph"), constructor);
@@ -45,7 +45,7 @@ Handle<Value> Graph::add_node(const v8::Arguments& args)
   HandleScope scope;
 
   if (args.Length() != 1 ) {
-    ThrowException(Exception::TypeError(String::New("Wrong number of arguments")));
+    ThrowException(Exception::TypeError(String::New("add_node: wrong number of arguments")));
     return scope.Close(Undefined());
   }
 
@@ -75,23 +75,8 @@ Handle<Value> Graph::add_edge(const v8::Arguments& args)
     graph->add_edge( from, to, weight );
     return scope.Close(Boolean::New(true));
 
-  } else if( args.Length() == 5 ){
-
-    v8::String::Utf8Value param1(args[0]->ToString());
-    v8::String::Utf8Value param2(args[1]->ToString());
-    v8::String::Utf8Value paramType(args[2]->ToString());
-
-    std::string from = std::string(*param1);
-    std::string to = std::string(*param2);
-    std::string type = std::string(*paramType);
-    double exchange_rate = args[3]->NumberValue();
-    double fee = args[4]->NumberValue();
-
-    graph->add_currency_edge( from, to, type, exchange_rate, fee );
-    return scope.Close(Boolean::New(true));
-
   } else {
-    ThrowException(Exception::TypeError(String::New("Wrong number of arguments")));
+    ThrowException(Exception::TypeError(String::New("add_edge: wrong number of arguments")));
     return scope.Close(Undefined()); 
   }
 }
@@ -112,23 +97,8 @@ Handle<Value> Graph::update_edge(const v8::Arguments& args)
     graph->update_edge( from, to, weight );
     return scope.Close(Boolean::New(true));
 
-  } else if( args.Length() == 5 ){
-
-    v8::String::Utf8Value param1(args[0]->ToString());
-    v8::String::Utf8Value param2(args[1]->ToString());
-    v8::String::Utf8Value paramType(args[2]->ToString());
-
-    std::string from = std::string(*param1);
-    std::string to = std::string(*param2);
-    std::string type = std::string(*paramType);
-    double exchange_rate = args[3]->NumberValue();
-    double fee = args[4]->NumberValue();
-
-    graph->update_currency_edge( from, to, type, exchange_rate, fee );
-    return scope.Close(Boolean::New(true));
-
   } else {
-    ThrowException(Exception::TypeError(String::New("Wrong number of arguments")));
+    ThrowException(Exception::TypeError(String::New("update_edge: wrong number of arguments")));
     return scope.Close(Undefined()); 
   }
 }
@@ -153,14 +123,14 @@ Handle<Value> Graph::trim(const v8::Arguments& args)
   return scope.Close(Boolean::New(true));
 }
 
-Handle<Value> Graph::check_arbitrage(const v8::Arguments& args)
+Handle<Value> Graph::bellmanford(const v8::Arguments& args)
 {
   HandleScope scope;
   std::vector<std::string> path;
 
   if( args.Length() != 1 ) {
     std::cout << "in != l \n";
-    ThrowException(Exception::TypeError(String::New("Wrong number of arguments")));
+    ThrowException(Exception::TypeError(String::New("bellmanford: wrong number of arguments")));
     return scope.Close(Undefined()); 
   }
   Graph* graph = ObjectWrap::Unwrap<Graph>(args.This());
@@ -182,18 +152,5 @@ Handle<Value> Graph::check_arbitrage(const v8::Arguments& args)
   return scope.Close( result );
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

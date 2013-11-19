@@ -1,6 +1,5 @@
 /*
-	Description: Directed Graph container designed to facilitate the finding of negative
-				 weight cycles in currency exchanges.
+	Description: Directed Graph container designed to facilitate bellman-ford algorithm.
 
 	Author: Gabriel Ferrin
 	Date: May 7th 2013
@@ -39,11 +38,11 @@ private:
 
 	struct GNode
 	{
-		std::string currency_type;
+		std::string name;
 		std::vector<GEdge> edges;
 		int key;
 
-		GNode( std::string name, int k ) : currency_type( name ), key( k ) {}
+		GNode( std::string name, int k ) : name( name ), key( k ) {}
 	};
 
 	struct GEdge
@@ -66,7 +65,7 @@ private:
 	static v8::Handle<v8::Value> update_edge(const v8::Arguments& args);
 	static v8::Handle<v8::Value> print(const v8::Arguments& args);
 	static v8::Handle<v8::Value> trim(const v8::Arguments& args);
-	static v8::Handle<v8::Value> check_arbitrage(const v8::Arguments& args);
+	static v8::Handle<v8::Value> bellmanford(const v8::Arguments& args);
 
 	/* Functions */ 
 	void add_edge( GNode *& origin, GNode *& destination, double weight );
@@ -74,7 +73,7 @@ private:
 	GNode * get_node( std::string & name )
 	{
 		for( int i = 0; i < nodes.size(); ++i ){
-			if( name == nodes.at(i).currency_type ){
+			if( name == nodes.at(i).name ){
 				return &nodes.at(i);
 			}
 		}	

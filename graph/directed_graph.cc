@@ -58,7 +58,7 @@ void Graph::update_edge( std::string & begin, std::string & end, double weight )
 		if( search(end) ){
 			dest = get_node( end );
 			for( int i = 0; i < origin->edges.size(); ++i ){
-				if( origin->edges.at(i).node->currency_type == dest->currency_type ){
+				if( origin->edges.at(i).node->name == dest->name ){
 					origin->edges.at(i).weight = weight;
 				}
 			}
@@ -70,44 +70,14 @@ void Graph::update_edge( std::string & begin, std::string & end, double weight )
 	}	
 }
 
-void Graph::add_currency_edge( std::string & begin, std::string & end, std::string & type, double exchange_rate, double fee  )
-{
-	double weight;
-
-	if( type == "ask" ){
-		weight = log( exchange_rate + (exchange_rate * fee) ); 
-	} else if( type == "bid" ){
-		weight = log( 1 / ( exchange_rate + (exchange_rate * fee) )); 
-	} else{
-		cout << "Error: wrong type for add currency edge - " << type << endl;
-		return;
-	}
-	add_edge( begin, end, weight );
-}
-
-void Graph::update_currency_edge( std::string & begin, std::string & end, std::string & type, double exchange_rate, double fee )
-{
-	double weight;
-
-	if( type == "ask" ){
-		weight = log( exchange_rate + (exchange_rate * fee) ); 
-	} else if( type == "bid" ){
-		weight = log( 1 / ( exchange_rate + (exchange_rate * fee) )); 
-	} else{
-		cout << "Error: wrong type for update currency edge - " << type << endl;
-		return;
-	}
-	update_edge( begin, end, weight );
-}
-
 void Graph::print()
 {
 	for( int i = 0; i < nodes.size(); ++i ){
-		cout << nodes.at(i).currency_type << ": \n";
+		cout << nodes.at(i).name << ": \n";
 
 		for( int j = 0; j < nodes.at(i).edges.size(); ++j ){
 			cout << "\t" <<  "weight: "<< nodes.at(i).edges.at(j).weight
-			     << " to: " <<nodes.at(i).edges.at(j).node->currency_type << "\n";
+			     << " to: " <<nodes.at(i).edges.at(j).node->name << "\n";
 		}
 	}
 }
@@ -148,7 +118,7 @@ void Graph::trim()
 bool Graph::search( std::string & name )
 {	
 	for( int i = 0; i < nodes.size(); ++i ){
-		if( name == nodes.at(i).currency_type ){
+		if( name == nodes.at(i).name ){
 			return true;
 		}
 	}
@@ -158,7 +128,7 @@ bool Graph::search( std::string & name )
 std::string Graph::bellman_ford( std::string & name, std::vector<std::string>& path )
 {
 	for( int i = 0; i < nodes.size(); ++i ){
-		if( name == nodes.at(i).currency_type ){
+		if( name == nodes.at(i).name ){
 			GNode *temp = get_node( name );
 			return bellman_ford( temp, path );
 		}
@@ -178,7 +148,7 @@ string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
 
 	// Initilize
 	for( int i = 0; i < nodes.size(); ++i ){
-		if( nodes.at(i).currency_type == origin->currency_type ){
+		if( nodes.at(i).name == origin->name ){
 			distances.push_back( 0 );
 		} else {
 			distances.push_back( infinity );
@@ -203,12 +173,18 @@ string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
 				}
 			}
 		}
-		if( !changed ){
+		if(!changed){
 			break;
 		} else {
 			changed = false;
 		}
 	}
+
+	cout << "outputing distances" << endl;
+	for(int i = 0; i < distances.size(); ++i){
+		cout << i << ":  " << distances.at(i) << endl;
+	}
+
 
 	string message = "Graph contains NO negative weight cycles \n"; 
 	// Check for negative weight cycles
