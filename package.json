@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "gypfile": true,
   "scripts": {
-    "start": "node app"
+    "start": "node test.js"
   },
   "dependencies": {
     "node-gyp": "~0.9.6"

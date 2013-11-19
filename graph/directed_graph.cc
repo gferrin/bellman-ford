@@ -4,6 +4,7 @@
 */
 
 #include "directed_graph.h"
+#include <sstream>  
 #include <cmath>
 
 using namespace std;
@@ -125,7 +126,7 @@ bool Graph::search( std::string & name )
 	return false;
 }
 
-std::string Graph::bellman_ford( std::string & name, std::vector<std::string>& path )
+bool Graph::bellman_ford( std::string & name, std::vector<std::vector<std::string> >& path )
 {
 	for( int i = 0; i < nodes.size(); ++i ){
 		if( name == nodes.at(i).name ){
@@ -141,7 +142,7 @@ void Graph::add_edge( GNode *& origin, GNode *& destination, double weight )
 	origin->edges.push_back( *temp );
 }
 
-string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
+bool Graph::bellman_ford( GNode *& origin, std::vector<std::vector<std::string> >& path )
 {
 	vector<double> distances, parents;
 	const double infinity = 99999999;
@@ -180,13 +181,7 @@ string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
 		}
 	}
 
-	cout << "outputing distances" << endl;
-	for(int i = 0; i < distances.size(); ++i){
-		cout << i << ":  " << distances.at(i) << endl;
-	}
-
-
-	string message = "Graph contains NO negative weight cycles \n"; 
+	bool negative_weight = false; 
 	// Check for negative weight cycles
 	for( int l = 0; l < nodes.size(); ++l ){ // these two loops - for every edge in the graph 
 		for( int m = 0; m < nodes.at(l).edges.size(); ++m ){
@@ -194,13 +189,32 @@ string Graph::bellman_ford( GNode *& origin, std::vector<std::string>& path )
 			GNode * tempNode = &nodes.at( l );
 			// If distances[u] + w < distances[v]
 			if( distances.at( tempNode->key ) + temp->weight < distances.at( temp->node->key ) && distances.at( tempNode->key ) != infinity ){
-				message = "Graph contains negative weight cycles \n"; 
+				negative_weight = true; 
 			}
 		}
 	}
+
+	if(!negative_weight){
+		
+		stringstream weight;
+		vector<std::string> key_value;
+		
+		for(int i = 0; i < nodes.size(); ++i){
+			
+			key_value.push_back(nodes.at(i).name);
+			// convery doulbe to string
+			weight << distances.at(i);
+			key_value.push_back(weight.str());
+			path.push_back(key_value);
+
+			key_value.clear();
+			weight.clear();
+			weight.str(std::string());
+		}
+	}
+
+	return negative_weight;
 	
-	cout << message;
-	return message; 
 }
 
 

@@ -30,7 +30,7 @@ public:
 	void add_currency_edge( std::string &, std::string &, std::string &, double, double );
 	void update_currency_edge( std::string &, std::string &, std::string &, double, double );
 	bool search( std::string & name );
-	std::string bellman_ford( std::string & name, std::vector<std::string> & );
+	bool bellman_ford( std::string & name, std::vector<std::vector<std::string> > & );
 
 private:
 	/* Structs */
@@ -69,7 +69,7 @@ private:
 
 	/* Functions */ 
 	void add_edge( GNode *& origin, GNode *& destination, double weight );
-	std::string bellman_ford( GNode *& origin, std::vector<std::string> & );
+	bool bellman_ford( GNode *& origin, std::vector<std::vector<std::string> > & );
 	GNode * get_node( std::string & name )
 	{
 		for( int i = 0; i < nodes.size(); ++i ){

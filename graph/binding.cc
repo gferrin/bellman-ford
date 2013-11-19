@@ -126,27 +126,28 @@ Handle<Value> Graph::trim(const v8::Arguments& args)
 Handle<Value> Graph::bellmanford(const v8::Arguments& args)
 {
   HandleScope scope;
-  std::vector<std::string> path;
+  std::vector<std::vector<std::string> > path;
 
   if( args.Length() != 1 ) {
-    std::cout << "in != l \n";
-    ThrowException(Exception::TypeError(String::New("bellmanford: wrong number of arguments")));
+    ThrowException(Exception::TypeError(String::New("bellmanford(source_node): wrong number of arguments")));
     return scope.Close(Undefined()); 
   }
   Graph* graph = ObjectWrap::Unwrap<Graph>(args.This());
   v8::String::Utf8Value param1(args[0]->ToString());
   std::string source = std::string(*param1);
 
-  graph->bellman_ford( source, path );
+  graph->bellman_ford(source, path);
 
-  Handle<Array> result = Array::New( path.size() );
+  Handle<Array> result = Array::New(path.size());
+  Handle<Array> keyvalue = Array::New(2);
   
-  for( int i = 0; i < path.size(); ++i ){
-    // this is some stupid hack because for some reason it was putting the 
-    // elements in the array in the wrong order
-    result->Set( path.size() - i - 1, String::New( path.at(i).c_str() ));
-    //std::cout << "path.at(i): " << path.at(i) << std::endl;
-    //result->Set(i, String::New( path.at(i).c_str()));
+  for(int i = 0; i < path.size(); ++i){
+    Handle<Array> keyvalue = Array::New(2);
+
+    keyvalue->Set(0, String::New(path.at(i).at(0).c_str()));
+    keyvalue->Set(1, String::New(path.at(i).at(1).c_str()));
+
+    result->Set(i, keyvalue);
   }
 
   return scope.Close( result );
