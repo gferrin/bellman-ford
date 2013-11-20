@@ -4,7 +4,7 @@
 	Author: Gabriel Ferrin
 	Date: May 7th 2013
 */
-
+#define BUILDING_NODE_EXTENSION
 #ifndef DIRECTED_GRAPH_H
 #define DIRECTED_GRAPH_H
 
@@ -70,11 +70,13 @@ private:
 	bool bellman_ford( GNode *& origin, std::vector<std::vector<std::string> > & );
 	GNode * get_node( std::string & name )
 	{
-		for( int i = 0; i < nodes.size(); ++i ){
+		for( unsigned long int i = 0; i < nodes.size(); ++i ){
 			if( name == nodes.at(i).name ){
 				return &nodes.at(i);
 			}
-		}	
+		}
+		// this should be fixed to an empty node
+		return &nodes.at(0);
 	}	 
 };
 

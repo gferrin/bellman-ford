@@ -1,5 +1,6 @@
-var graph_constructor = require('./index');
-var graph = new graph_constructor.Graph();
+var bellman_ford = require('./build/Release/graph');
+
+var graph = new bellman_ford.Graph();
 
 
 graph.add_node("a");

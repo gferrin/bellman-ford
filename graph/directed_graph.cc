@@ -19,7 +19,7 @@ Graph::Graph( string & name )
 
 Graph::~Graph() 
 {
-	for( int i = 0; i < nodes.size(); ++i ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){
 		nodes.at(i).edges.clear();
 	}
 	nodes.clear();
@@ -58,7 +58,7 @@ void Graph::update_edge( std::string & begin, std::string & end, double weight )
 		
 		if( search(end) ){
 			dest = get_node( end );
-			for( int i = 0; i < origin->edges.size(); ++i ){
+			for( unsigned long int i = 0; i < origin->edges.size(); ++i ){
 				if( origin->edges.at(i).node->name == dest->name ){
 					origin->edges.at(i).weight = weight;
 				}
@@ -73,10 +73,10 @@ void Graph::update_edge( std::string & begin, std::string & end, double weight )
 
 void Graph::print()
 {
-	for( int i = 0; i < nodes.size(); ++i ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){
 		cout << nodes.at(i).name << ": \n";
 
-		for( int j = 0; j < nodes.at(i).edges.size(); ++j ){
+		for( unsigned long int j = 0; j < nodes.at(i).edges.size(); ++j ){
 			cout << "\t" <<  "weight: "<< nodes.at(i).edges.at(j).weight
 			     << " to: " <<nodes.at(i).edges.at(j).node->name << "\n";
 		}
@@ -86,9 +86,9 @@ void Graph::print()
 void Graph::trim()
 {
 	// remove all bad edges from nodes
-	for( int i = 0; i < nodes.size(); ++i ){ // this needs to be done probably fewer times, try and prove this
-		for( int k = 0; k < nodes.size(); ++k ){
-			for( int x = 0; x < nodes.at(k).edges.size(); ++x ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){ // this needs to be done probably fewer times, try and prove this
+		for( unsigned long int k = 0; k < nodes.size(); ++k ){
+			for( unsigned long int x = 0; x < nodes.at(k).edges.size(); ++x ){
 				if( nodes.at(k).edges.at(x).node->edges.size() < 2 ){
 					nodes.at(k).edges.erase( nodes.at(k).edges.begin() + x );
 				}
@@ -98,7 +98,7 @@ void Graph::trim()
 	
 
 	// remove all nodes with only one edge
-	for( int i = 0; i < nodes.size(); ++i){
+	for( unsigned long int i = 0; i < nodes.size(); ++i){
 		if( nodes.at(i).edges.size() < 2 ){
 			nodes.erase( nodes.begin() + i );
 			if( i < 2 ){
@@ -110,7 +110,7 @@ void Graph::trim()
 	}
 
 	// reset all of the key values
-	for( int j = 0; j < nodes.size(); ++j){
+	for( unsigned long int j = 0; j < nodes.size(); ++j){
 		nodes.at(j).key = j;
 	}
 
@@ -118,7 +118,7 @@ void Graph::trim()
 
 bool Graph::search( std::string & name )
 {	
-	for( int i = 0; i < nodes.size(); ++i ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){
 		if( name == nodes.at(i).name ){
 			return true;
 		}
@@ -128,12 +128,13 @@ bool Graph::search( std::string & name )
 
 bool Graph::bellman_ford( std::string & name, std::vector<std::vector<std::string> >& path )
 {
-	for( int i = 0; i < nodes.size(); ++i ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){
 		if( name == nodes.at(i).name ){
 			GNode *temp = get_node( name );
 			return bellman_ford( temp, path );
 		}
 	}
+	return false;
 }
 
 void Graph::add_edge( GNode *& origin, GNode *& destination, double weight )
@@ -148,22 +149,22 @@ bool Graph::bellman_ford( GNode *& origin, std::vector<std::vector<std::string> 
 	const double infinity = 99999999;
 
 	// Initilize
-	for( int i = 0; i < nodes.size(); ++i ){
+	for( unsigned long int i = 0; i < nodes.size(); ++i ){
 		if( nodes.at(i).name == origin->name ){
 			distances.push_back( 0 );
 		} else {
 			distances.push_back( infinity );
 		}
 
-		parents.push_back( NULL );
+		parents.push_back( 0.0 );
 	}
 
 	// Relaxe Edges
-	for( int v = 0; v < nodes.size() - 1; ++v ){ // do the main loop v - 1 times, or v times to find negative weights
+	for( unsigned long int v = 0; v < nodes.size() - 1; ++v ){ // do the main loop v - 1 times, or v times to find negative weights
 		bool changed = false;
 
-		for( int l = 0; l < nodes.size(); ++l ){ // these two loops - for every edge in the graph 
-			for( int m = 0; m < nodes.at(l).edges.size(); ++m ){
+		for( unsigned long int l = 0; l < nodes.size(); ++l ){ // these two loops - for every edge in the graph 
+			for( unsigned long int m = 0; m < nodes.at(l).edges.size(); ++m ){
 				GEdge * temp = &nodes.at( l ).edges.at( m );
 				GNode * tempNode = &nodes.at( l );
 				// If distances[u] + w < distances[v]
@@ -183,8 +184,8 @@ bool Graph::bellman_ford( GNode *& origin, std::vector<std::vector<std::string> 
 
 	bool negative_weight = false; 
 	// Check for negative weight cycles
-	for( int l = 0; l < nodes.size(); ++l ){ // these two loops - for every edge in the graph 
-		for( int m = 0; m < nodes.at(l).edges.size(); ++m ){
+	for( unsigned long int l = 0; l < nodes.size(); ++l ){ // these two loops - for every edge in the graph 
+		for( unsigned long int m = 0; m < nodes.at(l).edges.size(); ++m ){
 			GEdge * temp = &nodes.at( l ).edges.at( m );
 			GNode * tempNode = &nodes.at( l );
 			// If distances[u] + w < distances[v]
@@ -199,7 +200,7 @@ bool Graph::bellman_ford( GNode *& origin, std::vector<std::vector<std::string> 
 		stringstream weight;
 		vector<std::string> key_value;
 		
-		for(int i = 0; i < nodes.size(); ++i){
+		for(unsigned long int i = 0; i < nodes.size(); ++i){
 			
 			key_value.push_back(nodes.at(i).name);
 			// convery doulbe to string

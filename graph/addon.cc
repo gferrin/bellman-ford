@@ -1,4 +1,6 @@
+// #ifndef BUILDING_NODE_EXTENSION
 #define BUILDING_NODE_EXTENSION
+
 #include <node.h>
 #include "directed_graph.h"
 
@@ -9,3 +11,5 @@ void InitAll(Handle<Object> exports) {
 }
 
 NODE_MODULE(graph, InitAll)
+
+// #endif

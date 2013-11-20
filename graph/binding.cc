@@ -1,4 +1,6 @@
+// #ifndef BUILDING_NODE_EXTENSION
 #define BUILDING_NODE_EXTENSION
+
 #include "directed_graph.h"
 
 using namespace v8;
@@ -139,9 +141,8 @@ Handle<Value> Graph::bellmanford(const v8::Arguments& args)
   graph->bellman_ford(source, path);
 
   Handle<Array> result = Array::New(path.size());
-  Handle<Array> keyvalue = Array::New(2);
   
-  for(int i = 0; i < path.size(); ++i){
+  for(unsigned long int i = 0; i < path.size(); ++i){
     Handle<Array> keyvalue = Array::New(2);
 
     keyvalue->Set(0, String::New(path.at(i).at(0).c_str()));
@@ -154,4 +155,4 @@ Handle<Value> Graph::bellmanford(const v8::Arguments& args)
   
 }
 
-
+// #endif
