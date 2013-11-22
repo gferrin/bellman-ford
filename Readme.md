@@ -13,6 +13,8 @@ as it's underlying data structure.
 
 ### Create Graph
 ```js
+var bellman_ford = require('bellman-ford');
+
 var graph = new bellman_ford();
 ``` 
 
