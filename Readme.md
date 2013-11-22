@@ -13,7 +13,7 @@ as it's underlying data structure.
 
 ### Create Graph
 ```js
-var graph = new bellman-ford();
+var graph = new bellman_ford();
 ``` 
 
 ### Add Nodes
