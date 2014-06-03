@@ -128,10 +128,7 @@ and
 
 `node-gyp build`
 
-## Notes
 
-So fare I have only tested this on OS X. I would appricate any and all feedback 
-and suggestions on how this could be improved. 
 
 
 
